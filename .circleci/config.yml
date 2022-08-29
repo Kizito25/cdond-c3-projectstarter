@@ -274,6 +274,8 @@ jobs:
             # Your code here
             cd backend
             npm install
+            npm audit fix
+            npm audit fix --force
             npm run migrations > migrations_dump.txt
 
       - run:
@@ -284,6 +286,7 @@ jobs:
             then
               curl --insecure https://kvdb.io/RUio93NZTbnyC3NxZVVy75/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
+      - install_awscli
       - destroy-environment 
       - revert-migrations
     # Here's where you will add some code to rollback on failure      
