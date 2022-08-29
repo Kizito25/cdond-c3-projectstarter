@@ -11,8 +11,14 @@ commands:
             sudo apt install software-properties-common -y
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible -y
-
-
+  install_nodejs:
+     description: Install Node.js 13
+     steps:
+      - run:
+          name: Install Node.js 13
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+            sudo apt install -y nodejs
   install_awscli:
     description: Install AWS cli
     steps:
@@ -29,8 +35,8 @@ commands:
       # Add parameter here   
       workflow_id:
         default: "${CIRCLE_WORKFLOW_ID:0:7}"
-        type: string
-        
+        type: string     
+
     steps:
       - run:
           name: Destroy environments
@@ -61,8 +67,8 @@ commands:
               cd ~/project/backend
               npm install
               npm run migrations:revert
-            fi
-            
+            fi      
+
 jobs:
   build-frontend:
     docker:
@@ -99,6 +105,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+
 
   test-frontend:
     docker:
@@ -142,8 +149,8 @@ jobs:
             npm run test
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-test
-            
+          key: backend-test        
+
   scan-frontend:
     docker:
       # Docker image here
@@ -166,7 +173,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-scan
- 
+
 
   scan-backend:
     docker:
@@ -274,8 +281,7 @@ jobs:
             # Your code here
             cd backend
             npm install
-            npm audit fix
-            npm audit fix --force
+            
             npm run migrations > migrations_dump.txt
 
       - run:
@@ -286,7 +292,7 @@ jobs:
             then
               curl --insecure https://kvdb.io/RUio93NZTbnyC3NxZVVy75/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
-      - install_awscli
+
       - destroy-environment 
       - revert-migrations
     # Here's where you will add some code to rollback on failure      
