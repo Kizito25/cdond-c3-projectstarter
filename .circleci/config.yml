@@ -284,7 +284,7 @@ jobs:
             then
               curl --insecure https://kvdb.io/RUio93NZTbnyC3NxZVVy75/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
-      - destroy-environment
+      - destroy-environment 
       - revert-migrations
     # Here's where you will add some code to rollback on failure      
 
