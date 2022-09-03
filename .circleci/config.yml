@@ -12,12 +12,12 @@ commands:
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible -y
   install_nodejs:
-     description: Install Node.js 14
+     description: Install Node.js 13
      steps:
       - run:
-          name: Install Node.js 14
+          name: Install Node.js 13
           command: |
-            curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
             sudo apt install -y nodejs
   install_awscli:
     description: Install AWS cli
@@ -72,7 +72,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:14.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -90,7 +90,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: circleci/node:14.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -110,7 +110,7 @@ jobs:
   test-frontend:
     docker:
       # Docker image here
-      - image: circleci/node:14.8.0      
+      - image: circleci/node:13.8.0      
     steps:
       # Checkout code from git
       - checkout
@@ -132,7 +132,7 @@ jobs:
   test-backend:
     docker:
       # Docker image here
-      - image: circleci/node:14.8.0      
+      - image: circleci/node:13.8.0      
     steps:
       # Checkout code from git
       - checkout
@@ -154,7 +154,7 @@ jobs:
   scan-frontend:
     docker:
       # Docker image here
-      - image: circleci/node:14.8.0      
+      - image: circleci/node:13.8.0      
     steps:
       # Checkout code from git
       - checkout
@@ -178,7 +178,7 @@ jobs:
   scan-backend:
     docker:
       # Docker image here
-      - image: circleci/node:14.8.0      
+      - image: circleci/node:13.8.0      
     steps:
       # Checkout code from git
       - checkout
@@ -271,7 +271,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      - image: circleci/node:14.8.0
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - checkout
